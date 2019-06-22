@@ -3,22 +3,30 @@ package com.pacman.basic;
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class ChaseGhost extends Ghost{
+	private boolean dead = false;
 
 	ChaseGhost(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void accept(LabyrinthObjectVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visit(this);
 	}
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
-		
+	
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+
+	@Override
+	public int getPoints() {
+		return points;
 	}
 
 }

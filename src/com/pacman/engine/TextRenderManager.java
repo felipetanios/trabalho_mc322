@@ -1,9 +1,14 @@
 package com.pacman.engine;
 
-import com.pacman.basic.Checkpoint;
+import com.pacman.basic.ChaseGhost;
+import com.pacman.basic.EvadeGhost;
+import com.pacman.basic.Fruits;
 import com.pacman.basic.LabyrinthMap;
 import com.pacman.basic.LabyrinthObject;
+import com.pacman.basic.Pellet;
 import com.pacman.basic.Player;
+import com.pacman.basic.PrestigiousGhost;
+import com.pacman.basic.RandomGhost;
 import com.pacman.basic.Wall;
 
 class TextRenderManager implements LabyrinthObjectVisitor {
@@ -43,13 +48,58 @@ class TextRenderManager implements LabyrinthObjectVisitor {
 		setSymbol(wall, 'X');
 	}
 	@Override
-	public void visit(Checkpoint checkpoint) {
-		if(checkpoint.isConquered()) {
+	public void visit(Fruits fruit) {
+		if(fruit.isConquered()) {
 			
-			setSymbol(checkpoint, 'T');
+			setSymbol(fruit, ' ');
 		}
 		else
-			setSymbol(checkpoint, 'C');
+			setSymbol(fruit, 'F');
 
+	}
+	@Override
+	public void visit(Pellet pellet) {
+		if(pellet.isConquered()) {
+			
+			setSymbol(pellet, ' ');
+		}
+		else
+			setSymbol(pellet, 'P');
+	}
+	@Override
+	public void visit(EvadeGhost evadeGhost) {
+		if(evadeGhost.isDead()) {
+			
+			setSymbol(evadeGhost, ' ');
+		}
+		else
+			setSymbol(evadeGhost, 'E');		
+	}
+	@Override
+	public void visit(ChaseGhost chaseGhost) {
+		if(chaseGhost.isDead()) {
+			
+			setSymbol(chaseGhost, ' ');
+		}
+		else
+			setSymbol(chaseGhost, 'C');		
+	}
+	@Override
+	public void visit(PrestigiousGhost prestigiousGhost) {
+		if(prestigiousGhost.isDead()) {
+			
+			setSymbol(prestigiousGhost, ' ');
+		}
+		else
+			setSymbol(prestigiousGhost, 'G');
+	}
+	@Override
+	public void visit(RandomGhost randomGhost) {
+		if(randomGhost.isDead()) {
+			
+			setSymbol(randomGhost, ' ');
+		}
+		else
+			setSymbol(randomGhost, 'R');		
 	}
 }

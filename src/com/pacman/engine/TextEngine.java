@@ -46,7 +46,9 @@ public class TextEngine extends GameEngine{
 			renderManager.render(labMap);
 			System.out.println("game looping");
 			newDirection = readCommandFromKeyboard(scanner);
+			System.out.println("Command read");
 			labMap.updateMap(newDirection);
+			System.out.println("new direction");
 		}
 		System.out.println("Fim de jogo");
 		scanner.close();

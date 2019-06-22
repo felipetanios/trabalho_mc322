@@ -2,14 +2,17 @@ package com.pacman.basic;
 
 import com.pacman.engine.LabyrinthObjectVisitor;
 
-public class Checkpoint extends LabyrinthObject{
-	private boolean conquered;
+public class Fruits extends LabyrinthObject{
+	private boolean conquered = false;
+	private static final int points = 10;
 	
-	Checkpoint(int x, int y) {
+	Fruits(int x, int y) {
 		super(x, y);
 		this.conquered = false;
 	}
-	
+	public int getPoints() {
+		return points;
+	}
 	public boolean isConquered() {
 		return conquered;
 	}

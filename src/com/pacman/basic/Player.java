@@ -54,7 +54,6 @@ public class Player extends LabyrinthObject {
 
 	@Override
 	public void accept(LabyrinthObjectVisitor visitor) {
-		// TODO Auto-generated method stub
 		visitor.visit(this);
 	}
 }

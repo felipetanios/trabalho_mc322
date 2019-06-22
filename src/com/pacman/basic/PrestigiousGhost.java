@@ -3,6 +3,7 @@ package com.pacman.basic;
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class PrestigiousGhost extends Ghost{
+	private boolean dead = false;
 
 	PrestigiousGhost(int x, int y) {
 		super(x, y);
@@ -11,14 +12,22 @@ public class PrestigiousGhost extends Ghost{
 
 	@Override
 	public void accept(LabyrinthObjectVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visit(this);
 	}
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+
+	@Override
+	public int getPoints() {
+		return points;
 	}
 
 }

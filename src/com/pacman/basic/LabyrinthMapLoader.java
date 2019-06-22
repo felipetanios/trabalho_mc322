@@ -19,11 +19,13 @@ public class LabyrinthMapLoader {
 		
 	}
 	public LabyrinthMap createDefaultMap() {
-		int width = 10;
-		int height = 10;
-		Player player = new Player(5, 5);
+		int width = 27;
+		int height = 40;
+		Player player = new Player(13, 31);
 		ArrayList<Wall> walls = new ArrayList<Wall>();
-		Checkpoint[] checkpoints = new Checkpoint[4];
+		Fruits[] fruits = new Fruits[4];
+		Ghost[] ghosts = new Ghost[4];
+		Pellet[] pellets = new	 Pellet[1];
 		int i;
 		
 		//cria a parte de cima e de baixo
@@ -48,16 +50,25 @@ public class LabyrinthMapLoader {
 			walls.add(wall1);
 			walls.add(wall2);
 		}
-		//cria os checkpoints
-		checkpoints[0] = new Checkpoint(1, 1);
-		checkpoints[1] = new Checkpoint(1, height-2);
-		checkpoints[2] = new Checkpoint(width -2 , 1);
-		checkpoints[3] = new Checkpoint(width -2 , height-2);
+		//cria os as frutas especiais
+		fruits[0] = new Fruits(1, 1);
+		fruits[1] = new Fruits(1, height-2);
+		fruits[2] = new Fruits(width -2 , 1);
+		fruits[3] = new Fruits(width -2 , height-2);
+		
+		//cria os fantasmas
+		ghosts[0] = new EvadeGhost(1, 1);
+		ghosts[1] = new ChaseGhost(1, height-2);
+		ghosts[2] = new PrestigiousGhost(width -2 , 1);
+		ghosts[3] = new RandomGhost(width -2 , height-2);
+				
+		//cria os pontinhos
+		pellets[0] = new Pellet(3, 3);
 		
 		Wall[] wallsArr = new Wall[walls.size()];
 		wallsArr = walls.toArray(wallsArr);
 		
-		LabyrinthMap labyrinth = new LabyrinthMap(width,  height,  player,  checkpoints,  wallsArr);
+		LabyrinthMap labyrinth = new LabyrinthMap(width,  height,  player,  wallsArr, ghosts, fruits, pellets);
 		return labyrinth;
 	}
 }

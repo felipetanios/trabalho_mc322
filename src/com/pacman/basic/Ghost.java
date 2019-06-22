@@ -3,15 +3,18 @@ package com.pacman.basic;
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public abstract class Ghost extends LabyrinthObject{
+	protected static final int points = 100;
 
 	Ghost(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public abstract void accept(LabyrinthObjectVisitor visitor);
 	
+	public abstract int getPoints();
+	
 	public abstract void move();
-
+	
+	public abstract boolean isDead();
 }
