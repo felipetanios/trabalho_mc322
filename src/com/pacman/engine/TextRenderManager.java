@@ -50,7 +50,6 @@ class TextRenderManager implements LabyrinthObjectVisitor {
 	@Override
 	public void visit(Fruits fruit) {
 		if(fruit.isConquered()) {
-			
 			setSymbol(fruit, ' ');
 		}
 		else
@@ -60,7 +59,6 @@ class TextRenderManager implements LabyrinthObjectVisitor {
 	@Override
 	public void visit(Pellet pellet) {
 		if(pellet.isConquered()) {
-			
 			setSymbol(pellet, ' ');
 		}
 		else

@@ -3,7 +3,7 @@ package com.pacman.basic;
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class Fruits extends LabyrinthObject{
-	private boolean conquered = false;
+	private boolean conquered;
 	private static final int points = 10;
 	
 	Fruits(int x, int y) {
@@ -14,10 +14,10 @@ public class Fruits extends LabyrinthObject{
 		return points;
 	}
 	public boolean isConquered() {
-		return conquered;
+		return this.conquered;
 	}
 	void conquer() {
-		conquered = true;
+		this.conquered = true;
 	}
 	@Override
 	public void accept(LabyrinthObjectVisitor visitor) {

@@ -20,7 +20,21 @@ public class LabyrinthMap {
 		this.fruits = fruits;
 		this.pellet = pellet;		
 	}
-	
+	protected Player getPlayer() {
+		return player;
+	}
+	protected Wall[] getWall() {
+		return this.wall;
+	}
+	protected Ghost[] getGhosts() {
+		return ghosts;
+	}
+	protected Fruits[] getFruits() {
+		return fruits;
+	}
+	protected Pellet[] getPellet() {
+		return pellet;
+	}
 	public int getWidht() {
 		return this.width;
 	}
@@ -28,7 +42,12 @@ public class LabyrinthMap {
 		return this.height;
 	}
 	public void updateMap(Direction direction) {
-		player.move(direction, wall);
+		player.move(direction, this);
+		for(Ghost g:ghosts) {
+			g.move(this);
+		}
+		System.out.println("Pontuação: " + player.getPoints());
+		//fazer contagem de tempo do poder da fruta especial pra comer os outros fantasmas
 	}
 	public boolean isDone() {
 		return false;
@@ -36,24 +55,24 @@ public class LabyrinthMap {
 	public void accept(LabyrinthObjectVisitor visitor) {
 		for(Wall walls: wall) {
 			walls.accept(visitor);
-			System.out.println("checkpoint is fine");
+			//System.out.println("checkpoint is fine");
 		}
 
-		System.out.println("wall is fine");
+		//System.out.println("wall is fine");
 		for(Fruits fruit: fruits) {
 			fruit.accept(visitor);
 		}
-		System.out.println("fruit is fine");
+		//System.out.println("fruit is fine");
 
 		for(Ghost g: ghosts) {
 			g.accept(visitor);
 		}
-		System.out.println("ghost is fine");
+		//System.out.println("ghost is fine");
 
 		for(Pellet p: pellet) {
 			p.accept(visitor);
 		}
-		System.out.println("pellet is fine");
+		//System.out.println("pellet is fine");
 
 		player.accept(visitor);
 	}

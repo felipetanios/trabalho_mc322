@@ -1,5 +1,7 @@
 package com.pacman.basic;
 
+import java.util.Random;
+
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class PrestigiousGhost extends Ghost{
@@ -16,11 +18,6 @@ public class PrestigiousGhost extends Ghost{
 	}
 
 	@Override
-	public void move() {
-		
-	}
-
-	@Override
 	public boolean isDead() {
 		return dead;
 	}
@@ -30,4 +27,29 @@ public class PrestigiousGhost extends Ghost{
 		return points;
 	}
 
+	@Override
+	public void move(LabyrinthMap map) {
+		//direção aleatória
+		Random r = new Random();
+		int x, y;
+		x = r.nextInt(map.getWidht());
+		y = r.nextInt(map.getHeight());
+		boolean found = false;
+		Wall walls[] = map.getWall();
+		//verifica se nao é parede
+		for(int i = 0; i < map.getWall().length && !found; i++) {
+			if(walls[i].isSameCoordinates(x, y))
+				found = true;
+		}
+		//fazer verifica jogador e outro fantasma
+		
+		if(!found) {
+			super.getCoordinate().changeCoordinates(x, y);
+		}
+	}
+	
+	@Override
+	public void killGhost() {
+		this.dead = true;
+	}
 }

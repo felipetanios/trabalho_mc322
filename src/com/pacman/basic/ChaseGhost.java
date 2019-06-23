@@ -15,11 +15,6 @@ public class ChaseGhost extends Ghost{
 	}
 
 	@Override
-	public void move() {
-	
-	}
-
-	@Override
 	public boolean isDead() {
 		return dead;
 	}
@@ -27,6 +22,17 @@ public class ChaseGhost extends Ghost{
 	@Override
 	public int getPoints() {
 		return points;
+	}
+
+	@Override
+	public void move(LabyrinthMap map) {
+		Player p = map.getPlayer();
+		
+	}
+
+	@Override
+	public void killGhost() {
+		this.dead = true;
 	}
 
 }

@@ -11,10 +11,8 @@ public abstract class Ghost extends LabyrinthObject{
 
 	@Override
 	public abstract void accept(LabyrinthObjectVisitor visitor);
-	
-	public abstract int getPoints();
-	
-	public abstract void move();
-	
+	public abstract int getPoints();	
 	public abstract boolean isDead();
+	public abstract void killGhost();
+	public abstract void move(LabyrinthMap map);
 }

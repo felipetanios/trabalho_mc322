@@ -37,18 +37,18 @@ public class TextEngine extends GameEngine{
 		//verifica se o lab foi completado
 		Scanner scanner = new Scanner(System.in);
 		LabyrinthMap labMap = getLabyrinthMap();
-		System.out.println("game pre pre looping");
+		//System.out.println("game pre pre looping");
 		
 		Direction newDirection;
-		System.out.println("game  pre looping");
+		//System.out.println("game  pre looping");
 		while(!labMap.isDone()) {
 			
 			renderManager.render(labMap);
-			System.out.println("game looping");
+			//System.out.println("game looping");
 			newDirection = readCommandFromKeyboard(scanner);
-			System.out.println("Command read");
+			//System.out.println("Command read");
 			labMap.updateMap(newDirection);
-			System.out.println("new direction");
+			//System.out.println("new direction");
 		}
 		System.out.println("Fim de jogo");
 		scanner.close();

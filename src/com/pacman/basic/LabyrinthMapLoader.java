@@ -54,7 +54,7 @@ public class LabyrinthMapLoader {
 		fruits[0] = new Fruits(1, 1);
 		fruits[1] = new Fruits(1, height-2);
 		fruits[2] = new Fruits(width -2 , 1);
-		fruits[3] = new Fruits(width -2 , height-2);
+		fruits[3] = new Fruits(width -3 , height-2);
 		
 		//cria os fantasmas
 		ghosts[0] = new EvadeGhost(1, 1);
@@ -63,7 +63,7 @@ public class LabyrinthMapLoader {
 		ghosts[3] = new RandomGhost(width -2 , height-2);
 				
 		//cria os pontinhos
-		pellets[0] = new Pellet(3, 3);
+		pellets[0] = new Pellet(14, 31);
 		
 		Wall[] wallsArr = new Wall[walls.size()];
 		wallsArr = walls.toArray(wallsArr);

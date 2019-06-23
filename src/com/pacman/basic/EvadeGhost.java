@@ -15,11 +15,6 @@ public class EvadeGhost extends Ghost{
 	}
 
 	@Override
-	public void move() {
-		
-	}
-
-	@Override
 	public boolean isDead() {
 		return dead;
 	}
@@ -29,4 +24,13 @@ public class EvadeGhost extends Ghost{
 		return points;
 	}
 
+	@Override
+	public void move(LabyrinthMap map) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void killGhost() {
+		this.dead = true;
+	}
 }
