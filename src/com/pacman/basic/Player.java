@@ -4,10 +4,14 @@ import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class Player extends LabyrinthObject {
 	private Direction currentDirection;
-	private boolean superPower = false;
-	private int points = 0;
+	private boolean superPower;
+	private int points;
+	private int lifes;
 	Player(int x, int y) {
 		super(x, y);
+		this.points = 0;
+		this.lifes = 3;
+		this.superPower = false;
 	}
 	
 	public Direction getCurrentDirection() {
@@ -16,14 +20,33 @@ public class Player extends LabyrinthObject {
 	public int getPoints() {
 		return points;
 	}
-	public boolean isSuper() {
+	void updateLifes() {
+		this.lifes++;
+		points -= 10000;
+	}
+	int getLifes() {
+		return lifes;
+	}
+	boolean isSuper() {
 		return superPower;
 	}
-	public void activateSuper() {
+	void activateSuper() {
 		this.superPower = true;
 	}
-	public void deactivateSuper() {
+	void deactivateSuper() {
 		this.superPower = false;
+	}
+	void kill() {
+		this.lifes--;
+	}
+	void updatePoints(LabyrinthObject obj) {
+		if(obj instanceof Ghost) {
+			points += ((Ghost) obj).getPoints();
+		} else if(obj instanceof Pellet) {
+			points += ((Pellet) obj).getPoints();
+		} else if(obj instanceof Fruits) {
+			points += ((Fruits) obj).getPoints();
+		}
 	}
 	void move(Direction direction, LabyrinthMap map) {
 		boolean canMove = true;
@@ -123,26 +146,29 @@ public class Player extends LabyrinthObject {
 		if(foundWall) {
 			canMove = false;
 		} else if(foundGhost != null) {
-			if(this.superPower) {
-				//come fantasma
-				foundGhost.killGhost();
-				points += foundGhost.getPoints();
-				canMove = true;
-			}
-			else {
-				canMove = false;
-				//game over
+			if(!foundGhost.isDead()) {
+				if(this.superPower) {
+					//come fantasma
+					foundGhost.killGhost();
+					this.updatePoints(foundGhost);
+					canMove = true;
+				}
+				else {
+					canMove = false;
+					//perde vida
+					this.kill();
+				}
 			}
 		} else if(foundFruit != null) {
 			if(!foundFruit.isConquered()) {
-				points += foundFruit.getPoints();
+				this.updatePoints(foundFruit);
 				this.activateSuper();
 				foundFruit.conquer();
 				System.out.println("FRUIT CONQUERED");
 			}
 		} else if(foundPellet != null) {
 			if(!foundPellet.isConquered()) {
-				points += foundPellet.getPoints();
+				this.updatePoints(foundPellet);
 				foundPellet.conquer();
 			}
 		}

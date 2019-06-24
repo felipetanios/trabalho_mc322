@@ -3,10 +3,11 @@ package com.pacman.basic;
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class EvadeGhost extends Ghost{
-	private boolean dead = false;
+	private boolean dead;
 
 	EvadeGhost(int x, int y) {
 		super(x, y);
+		this.dead = false;
 	}
 
 	@Override

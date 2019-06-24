@@ -41,7 +41,7 @@ public class TextEngine extends GameEngine{
 		
 		Direction newDirection;
 		//System.out.println("game  pre looping");
-		while(!labMap.isDone()) {
+		while(!labMap.isFinished() && !labMap.isGameOver()) {
 			
 			renderManager.render(labMap);
 			//System.out.println("game looping");

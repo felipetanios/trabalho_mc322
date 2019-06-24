@@ -5,6 +5,7 @@ import com.pacman.engine.LabyrinthObjectVisitor;
 public abstract class LabyrinthObject {
 	private Coordinate coordinate;
 	private boolean canPass;
+	
 	LabyrinthObject(int x, int y) {
 		coordinate = new Coordinate(0,0);
 		coordinate.changeCoordinates(x, y);

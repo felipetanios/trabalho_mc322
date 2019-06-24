@@ -13,6 +13,7 @@ import com.pacman.basic.Wall;
 
 class TextRenderManager implements LabyrinthObjectVisitor {
 	private char charMap[][];
+	
 	public TextRenderManager(int mapWidth, int mapHeight) {
 		this.charMap = new char[mapHeight][mapWidth];
 	}

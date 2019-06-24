@@ -46,11 +46,31 @@ public class LabyrinthMap {
 		for(Ghost g:ghosts) {
 			g.move(this);
 		}
+		updatePlayer();
 		System.out.println("Pontuação: " + player.getPoints());
+		System.out.println("Vidas: "+ player.getLifes());
 		//fazer contagem de tempo do poder da fruta especial pra comer os outros fantasmas
 	}
-	public boolean isDone() {
+	public boolean isGameOver() {
+		if(player.getLifes() <= 0) {
+			return true;
+		}
 		return false;
+	}
+	public boolean isFinished() {
+		boolean foundPellet = false;
+		for(Pellet p:pellet) {
+			if(!p.isConquered())
+				foundPellet = true;
+		}
+		if(foundPellet)
+			return false;
+		else
+			return true;
+	}
+	private void updatePlayer() {
+		if(player.getPoints() >= 10000)
+			player.updateLifes();
 	}
 	public void accept(LabyrinthObjectVisitor visitor) {
 		for(Wall walls: wall) {
