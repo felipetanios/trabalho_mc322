@@ -1,5 +1,7 @@
 package com.pacman.basic;
 
+import java.util.Random;
+
 import com.pacman.engine.LabyrinthObjectVisitor;
 
 public class Player extends LabyrinthObject {
@@ -59,15 +61,36 @@ public class Player extends LabyrinthObject {
 		Ghost ghosts[] = map.getGhosts();
 		Pellet pellets[] = map.getPellet();
 		Fruits fruits[] = map.getFruits();
-		//verifica se nao é parede
+		
+		switch (direction) {
+		case UP:
+			if(super.getX() >= map.getWidht() || (super.getY() - 1) < 0)
+				canMove = false;
+			break;
+		case DOWN:
+			if(super.getX() >= map.getWidht() || (super.getY() + 1) >= map.getHeight())
+				canMove = false;
+			break;
+		case RIGH:
+			if((super.getX() + 1) >= map.getWidht() || super.getY() >= map.getHeight())
+				canMove = false;
+			break;
+		case LEFT:
+			if((super.getX() - 1) < 0 || super.getY() >= map.getHeight())
+				canMove = false;
+			break;
+		}
+
+		
+		//verifica se nao ï¿½ parede
 		for(int i = 0; i < map.getWall().length && !foundWall; i++) {
 			switch (direction) {
 			case UP:
-				if(walls[i].isSameCoordinates(super.getX(), super.getY() + 1))
+				if(walls[i].isSameCoordinates(super.getX(), super.getY() - 1))
 					foundWall = true;
 				break;
 			case DOWN:
-				if(walls[i].isSameCoordinates(super.getX(), super.getY()-1))
+				if(walls[i].isSameCoordinates(super.getX(), super.getY() + 1))
 					foundWall = true;
 				break;
 			case RIGH:
@@ -80,15 +103,15 @@ public class Player extends LabyrinthObject {
 				break;
 			}
 		}
-		//verifica se não é fantasma
+		//verifica se nï¿½o ï¿½ fantasma
 		for(int i = 0; i < ghosts.length && foundGhost == null; i++) {
 			switch (direction) {
 			case UP:
-				if(ghosts[i].isSameCoordinates(super.getX(), super.getY() + 1))
+				if(ghosts[i].isSameCoordinates(super.getX(), super.getY() - 1))
 					foundGhost = ghosts[i];
 				break;
 			case DOWN:
-				if(ghosts[i].isSameCoordinates(super.getX(), super.getY()-1))
+				if(ghosts[i].isSameCoordinates(super.getX(), super.getY() + 1))
 					foundGhost = ghosts[i];
 				break;
 			case RIGH:
@@ -101,15 +124,15 @@ public class Player extends LabyrinthObject {
 				break;
 			}
 		}
-		//verifica se é fruta
+		//verifica se ï¿½ fruta
 		for(int i = 0; i < fruits.length && foundFruit == null; i++) {
 			switch (direction) {
 			case UP:
-				if(fruits[i].isSameCoordinates(super.getX(), super.getY() + 1))
+				if(fruits[i].isSameCoordinates(super.getX(), super.getY() - 1))
 					foundFruit = fruits[i];
 				break;
 			case DOWN:
-				if(fruits[i].isSameCoordinates(super.getX(), super.getY()-1))
+				if(fruits[i].isSameCoordinates(super.getX(), super.getY() + 1))
 					foundFruit = fruits[i];
 				break;
 			case RIGH:
@@ -122,15 +145,15 @@ public class Player extends LabyrinthObject {
 				break;
 			}
 		}
-		//verifica se é ponto
+		//verifica se ï¿½ ponto
 		for(int i = 0; i < pellets.length && foundPellet == null; i++) {
 			switch (direction) {
 			case UP:
-				if(pellets[i].isSameCoordinates(super.getX(), super.getY() + 1))
+				if(pellets[i].isSameCoordinates(super.getX(), super.getY() - 1))
 					foundPellet = pellets[i];
 				break;
 			case DOWN:
-				if(pellets[i].isSameCoordinates(super.getX(), super.getY()-1))
+				if(pellets[i].isSameCoordinates(super.getX(), super.getY() + 1))
 					foundPellet = pellets[i];
 				break;
 			case RIGH:
@@ -175,10 +198,10 @@ public class Player extends LabyrinthObject {
 		if (canMove) {
 			switch (direction) {
 			case UP:
-				super.getCoordinate().changeCoordinates(super.getX(), super.getY() + 1);
+				super.getCoordinate().changeCoordinates(super.getX(), super.getY() - 1);
 				break;
 			case DOWN:
-				super.getCoordinate().changeCoordinates(super.getX(), super.getY() - 1);
+				super.getCoordinate().changeCoordinates(super.getX(), super.getY() + 1);
 				break;
 			case RIGH:
 				super.getCoordinate().changeCoordinates(super.getX() + 1, super.getY());
