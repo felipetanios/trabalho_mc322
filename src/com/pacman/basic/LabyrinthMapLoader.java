@@ -1,6 +1,12 @@
 package com.pacman.basic;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LabyrinthMapLoader {
 	private static LabyrinthMapLoader INSTANCE;
@@ -14,10 +20,81 @@ public class LabyrinthMapLoader {
 		}
 		return INSTANCE;
 	}
-	public LabyrinthMap loadMapFromFile(String path) {
-		return null;
+	public LabyrinthMap loadMapFromFile(String path) throws IOException {
+		File file = new File (path) ;
+		String line = null;
+		int width = 0;
+		int height = 0;
+		int nWalls = 0, nFruits = 0, nGhosts = 0, nPellets = 0;
+		Player player = null;
+		ArrayList<Wall> walls = null;
+		ArrayList<Fruits> fruits = null;
+		ArrayList<Ghost> ghosts = null;
+		ArrayList<Pellet> pellets = null;
+		String ghostType = null;
+		LabyrinthMap map = null;
+		try {
+			Scanner sc = new Scanner(file);
+			width = sc.nextInt();
+			height = sc.nextInt();
+			player = new Player(sc.nextInt(), sc.nextInt());
+			nWalls = sc.nextInt();
+			walls = new ArrayList<Wall>();
+			for (int i = 0; i < nWalls; i++) {
+				walls.add(new Wall(sc.nextInt(), sc.nextInt()));
+			}
+			nFruits = sc.nextInt();
+			fruits = new ArrayList<Fruits>();
+			for (int i = 0; i < nFruits; i++) {
+				fruits.add(new Fruits(sc.nextInt(), sc.nextInt()));
+			}
+			nGhosts = sc.nextInt();
+			ghosts = new ArrayList<Ghost>();
+			for (int i = 0; i < nGhosts; i++) {
+				ghostType = sc.next();
+				if(ghostType.compareTo("Prestigious") == 0) {
+					ghosts.add(new PrestigiousGhost(sc.nextInt(), sc.nextInt()));
+				}
+				else if(ghostType.compareTo("Random") == 0) {
+					ghosts.add(new RandomGhost(sc.nextInt(), sc.nextInt()));
+				}
+				else if(ghostType.compareTo("Chase") == 0) {
+					ghosts.add(new ChaseGhost(sc.nextInt(), sc.nextInt()));
+				}
+				else if(ghostType.compareTo("Evade") == 0) {
+					ghosts.add(new EvadeGhost(sc.nextInt(), sc.nextInt()));
+				}
+				else {
+					System.out.println("Ghost type not available");
+				}
+			}
+			nPellets = sc.nextInt();
+			pellets = new ArrayList<Pellet>();
+			for (int i = 0; i < nPellets; i++) {
+				pellets.add(new Pellet(sc.nextInt(), sc.nextInt()));
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		Wall[] wallsArr = new Wall[nWalls];
+		wallsArr = walls.toArray(wallsArr);
+		
+		Fruits[] fruitsArr = new Fruits[nFruits];
+		fruitsArr = fruits.toArray(fruitsArr);
+		
+		Ghost[] ghostArr = new Ghost[nGhosts];
+		ghostArr = ghosts.toArray(ghostArr);
+		
+		Pellet[] pelletsArr = new Pellet [nPellets];
+		pelletsArr = pellets.toArray(pelletsArr);
+		
+		map = new LabyrinthMap(width,  height,  player,  wallsArr, ghostArr, fruitsArr, pelletsArr);;
+		return map;
 	}
+	
 	public LabyrinthMap createDefaultMap() {
 		int width = 27;
 		int height = 40;
