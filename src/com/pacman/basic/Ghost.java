@@ -15,4 +15,5 @@ public abstract class Ghost extends LabyrinthObject{
 	public abstract boolean isDead();
 	public abstract void killGhost();
 	public abstract void move(LabyrinthMap map);
+	
 }

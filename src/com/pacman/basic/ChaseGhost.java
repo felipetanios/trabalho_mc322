@@ -2,8 +2,15 @@ package com.pacman.basic;
 
 import com.pacman.engine.LabyrinthObjectVisitor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ChaseGhost extends Ghost{
 	private boolean dead = false;
+	private boolean overPlayer = false; 
 
 	ChaseGhost(int x, int y) {
 		super(x, y);
@@ -26,39 +33,96 @@ public class ChaseGhost extends Ghost{
 
 	@Override
 	public void move(LabyrinthMap map) {
-//		Player p = map.getPlayer();
-//		double distance = 0;
-//		int closest[] = new int[4];
-//		int points[][] = new int[4][2];
-//		//Cima
-//		points[0][0] = p.getX() - this.getX();
-//		points[0][1] = p.getY() - (this.getY() + 1);
-//		//Baixo
-//		points[1][0] = p.getX() - this.getX();
-//		points[1][1] = p.getY() - (this.getY() - 1);
-//		//Esquerda
-//		points[2][0] = p.getX() - (this.getX() - 1);
-//		points[2][1] = p.getY() - this.getY();
-//		//Direita
-//		points[3][0] = p.getX() - (this.getX() + 1);
-//		points[3][1] = p.getY() - this.getY();
-//		
-//		for(int i = 0; i < 4; i ++) {
-//			double distance2 = Math.sqrt(points[i][0]*points[i][0] + points[i][1]*points[i][1]);
-//			closest[i] = i;
-//			if (distance2 < distance) {
-//				closest[] = i;
-//				distance = distance2;
-//			}
-//		}
-//		
-//		
-//		
+		if (!this.isDead()) {
+			Player p = map.getPlayer();
+			double distance;
+			Coordinate neighbour;
+			Map<Double, Coordinate> distanceMap = new HashMap<Double, Coordinate>();
+			
+			//se esta em cima do jogador nao se mexe, espera o jogador andar
+			if (overPlayer){
+				super.getCoordinate().changeCoordinates(super.getX(), super.getY());
+				overPlayer = false;
+				return;
+			}
+			
+			//Cima
+			neighbour = new Coordinate(super.getX(), super.getY()+1);
+			distance = getDistance(neighbour, p);
+			distanceMap.put(distance,neighbour);
+			//Baixo
+			neighbour = new Coordinate(super.getX(), super.getY()-1);
+			distance = getDistance(neighbour, p);
+			distanceMap.put(distance,neighbour);
+			//Esquerda
+			neighbour = new Coordinate(super.getX()-1, super.getY());
+			distance = getDistance(neighbour, p);
+			distanceMap.put(distance,neighbour);
+			//Direita
+			neighbour= new Coordinate(super.getX()+1, super.getY());
+			distance = getDistance(neighbour, p);
+			distanceMap.put(distance,neighbour);
+			
+			List<Double> distanceArray = new ArrayList<>(distanceMap.keySet());
+			Collections.sort(distanceArray);
+			
+			
+			
+			System.out.println(distanceArray);
+			
+			
+	
+			Wall walls[] = map.getWall();
+			Player player = map.getPlayer();
+			Ghost ghosts[] = map.getGhosts();
+			
+			for (Double distances:distanceArray) {
+				boolean foundWall = false;
+				boolean foundPlayer = false;
+				boolean foundGhost = false;
+				Coordinate coordinateToMove = distanceMap.get(distances);
+				//verifica se nao é parede
+						
+				for(int i = 0; i < map.getWall().length && !foundWall; i++) {
+					if (walls[i].isSameCoordinates(coordinateToMove.getX(), coordinateToMove.getY()))
+						foundWall = true;
+				}
+				//fazer verifica jogador e outro fantasma
+				if(p.isSameCoordinates(coordinateToMove.getX(), coordinateToMove.getY()))
+					foundPlayer = true;
+				
+				//verifica se n�o � fantasma
+				for(int i = 0; i < ghosts.length && !foundGhost; i++) {
+					if (ghosts[i].isSameCoordinates(coordinateToMove.getX(), coordinateToMove.getY()))
+						foundGhost = true;
+				}
+				if(foundPlayer) {
+					overPlayer = true;
+					//jogador foi pego por um fantasma random
+					if(player.isSuper()) {
+						System.out.println("Super player");
+						//fantasma morre
+						this.killGhost();
+						player.updatePoints(this);
+					}
+					else {
+						System.out.println("Player Morre");
+						// jogador perde vida
+						player.kill();
+					}
+				} else if(!foundWall && !foundGhost) {
+					super.getCoordinate().changeCoordinates(coordinateToMove.getX(), coordinateToMove.getY());
+					return;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void killGhost() {
 		this.dead = true;
 	}
+	
+	
 
 }
