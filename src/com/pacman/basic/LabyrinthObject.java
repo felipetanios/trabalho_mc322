@@ -35,14 +35,5 @@ public abstract class LabyrinthObject {
 		else
 			return false;
 	}
-	protected double getDistance (LabyrinthObject q, LabyrinthObject p) {
-		//System.out.println(ghost.getX()+"  " +ghost.getY() + '\n');
-		double distance = Math.sqrt(Math.pow((q.getX()-p.getX()), 2) + Math.pow((q.getY()-p.getY()), 2));
-		return distance;
-	}
-	protected double getDistance (Coordinate q, LabyrinthObject p) {
-		//System.out.println(ghost.getX()+"  " +ghost.getY() + '\n');
-		double distance = Math.sqrt(Math.pow((q.getX()-p.getX()), 2) + Math.pow((q.getY()-p.getY()), 2));
-		return distance;
-	}
+	
 }

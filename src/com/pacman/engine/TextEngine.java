@@ -1,9 +1,11 @@
 package com.pacman.engine;
 
+
 import java.util.Scanner;
 
 import com.pacman.basic.Direction;
 import com.pacman.basic.LabyrinthMap;
+
 
 public class TextEngine extends GameEngine{
 	private TextRenderManager renderManager;
@@ -13,42 +15,39 @@ public class TextEngine extends GameEngine{
 		
 		super(labyrinthMap);
 		this.renderManager = new TextRenderManager(labyrinthMap.getWidht(), labyrinthMap.getHeight());
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Direction readCommandFromKeyboard(Scanner scanner) {
-		Direction dir = null;
 		switch(scanner.nextInt()) {
 		case 1:
-			return dir.UP;
+			return Direction.UP;
 		case 2:
-			return dir.DOWN;
+			return Direction.DOWN;
 		case 3:
-			return dir.RIGH;
+			return Direction.RIGH;
 		case 4:
-			return dir.LEFT;
+			return Direction.LEFT;
+		default:
+			throw new NullPointerException("Entrada invalida!!");
 		}
-		return dir;
 	}
 	public void gameLoop() {
-		//printa lab;
-		// le o comando do teclado;
-		//atualiza mapa;
-		//verifica se o lab foi completado
 		Scanner scanner = new Scanner(System.in);
 		LabyrinthMap labMap = getLabyrinthMap();
-		//System.out.println("game pre pre looping");
 		
 		Direction newDirection;
-		//System.out.println("game  pre looping");
 		while(!labMap.isFinished() && !labMap.isGameOver()) {
-			
+			newDirection = null;
 			renderManager.render(labMap);
-			//System.out.println("game looping");
-			newDirection = readCommandFromKeyboard(scanner);
-			//System.out.println("Command read");
-			labMap.updateMap(newDirection);
-			//System.out.println("new direction");
+			
+			try {
+				newDirection = readCommandFromKeyboard(scanner);
+			}catch(NullPointerException  e){
+			      System.out.println(e.getMessage());
+			}
+			
+			if (newDirection != null)
+				labMap.updateMap(newDirection);
 		}
 		System.out.println("Fim de jogo");
 		scanner.close();

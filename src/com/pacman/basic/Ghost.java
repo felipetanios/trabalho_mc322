@@ -15,5 +15,12 @@ public abstract class Ghost extends LabyrinthObject{
 	public abstract boolean isDead();
 	public abstract void killGhost();
 	public abstract void move(LabyrinthMap map);
-	
+	protected double getDistance (LabyrinthObject q, LabyrinthObject p) {
+		double distance = Math.sqrt(Math.pow((q.getX()-p.getX()), 2) + Math.pow((q.getY()-p.getY()), 2));
+		return distance;
+	}
+	protected double getDistance (Coordinate q, LabyrinthObject p) {
+		double distance = Math.sqrt(Math.pow((q.getX()-p.getX()), 2) + Math.pow((q.getY()-p.getY()), 2));
+		return distance;
+	}
 }

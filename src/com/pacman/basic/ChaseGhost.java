@@ -65,12 +65,6 @@ public class ChaseGhost extends Ghost{
 			
 			List<Double> distanceArray = new ArrayList<>(distanceMap.keySet());
 			Collections.sort(distanceArray);
-			
-			
-			
-			System.out.println(distanceArray);
-			
-			
 	
 			Wall walls[] = map.getWall();
 			Player player = map.getPlayer();
@@ -100,13 +94,11 @@ public class ChaseGhost extends Ghost{
 					overPlayer = true;
 					//jogador foi pego por um fantasma random
 					if(player.isSuper()) {
-						System.out.println("Super player");
 						//fantasma morre
 						this.killGhost();
 						player.updatePoints(this);
 					}
 					else {
-						System.out.println("Player Morre");
 						// jogador perde vida
 						player.kill();
 					}
